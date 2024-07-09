@@ -14,14 +14,15 @@ export const SocketProvider = (props) => {
 
   useEffect(() => {
     const connection = io();
-    console.log(connection);
+    console.log("socket connection", connection);
     setSocket(connection);
   }, []);
 
-  socket?.on("connection_error", async (err) => {
-    console.log("connection error", err);
+  socket?.on("connect_error", async (err) => {
+    console.log("Error establishing socket", err);
     await fetch("/api/socket");
   });
+
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );
